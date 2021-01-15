@@ -5,10 +5,7 @@ exports.handler = async (req, resp) => {
     projectResourceAssignmentsId: 1,
     beginYear: 2021,
     beginMonth: 1,
-    // projectName: "projectName",
-    // projectPriority: "high",
   });
-  console.log("=========", data);
   try {
     if (data) {
       return {

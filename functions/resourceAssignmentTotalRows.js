@@ -1,19 +1,17 @@
-const { GraphQLClient, gql } = require("graphql-request");
-const fetch = require("./utils/fetchQuery");
-const estimateForProjectResourceAssignmentMonth = require("./estimateForProjectResourceAssignmentMonth");
 const projectNameForProjectResourceAssignment = require("./projectNameForProjectResourceAssignment");
+const estimateForProjectResourceAssignmentMonth = require("./estimateForProjectResourceAssignmentMonth");
+
 const resourceAssignmentEstimates = async ({
   projectResourceAssignmentsId,
   beginYear: year,
   beginMonth: month,
-  // projectName,
-  // projectPriority,
 }) => {
   let result = {};
-  const projectName = await projectNameForProjectResourceAssignment(
-    projectResourceAssignmentsId
-  );
-  // result.priority = projectPriority ? projectPriority : "";
+  result.id = projectResourceAssignmentsId;
+  const projectName = await projectNameForProjectResourceAssignment({
+    projectResourceAssignmentsId,
+  });
+
   for (let i = 1; i <= 12; i++) {
     result[`month_${i}`] = await estimateForProjectResourceAssignmentMonth({
       projectResourceAssignmentsId: projectResourceAssignmentsId,
@@ -28,7 +26,7 @@ const resourceAssignmentEstimates = async ({
 
   return {
     ...result,
-    column_text: text,
+    text: projectName,
     resource_assignment_id: projectResourceAssignmentsId,
   };
 };
