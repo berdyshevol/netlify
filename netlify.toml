@@ -1,2 +1,3 @@
 [build]
   functions = "functions"
+  functionsPort = "8885"
